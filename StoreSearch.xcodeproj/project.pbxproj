@@ -13,6 +13,7 @@
 		313ED3B41B76201B00689FFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 313ED3B31B76201B00689FFC /* Images.xcassets */; };
 		313ED3B71B76201B00689FFC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 313ED3B51B76201B00689FFC /* LaunchScreen.xib */; };
 		313ED3C31B76201B00689FFC /* StoreSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313ED3C21B76201B00689FFC /* StoreSearchTests.swift */; };
+		313ED3CD1B762E5D00689FFC /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313ED3CC1B762E5D00689FFC /* SearchResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		313ED3BC1B76201B00689FFC /* StoreSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoreSearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		313ED3C11B76201B00689FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		313ED3C21B76201B00689FFC /* StoreSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchTests.swift; sourceTree = "<group>"; };
+		313ED3CC1B762E5D00689FFC /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				313ED3AC1B76201B00689FFC /* AppDelegate.swift */,
 				313ED3AE1B76201B00689FFC /* SearchViewController.swift */,
+				313ED3CC1B762E5D00689FFC /* SearchResult.swift */,
 				313ED3B01B76201B00689FFC /* Main.storyboard */,
 				313ED3B31B76201B00689FFC /* Images.xcassets */,
 				313ED3B51B76201B00689FFC /* LaunchScreen.xib */,
@@ -213,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				313ED3AF1B76201B00689FFC /* SearchViewController.swift in Sources */,
+				313ED3CD1B762E5D00689FFC /* SearchResult.swift in Sources */,
 				313ED3AD1B76201B00689FFC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
