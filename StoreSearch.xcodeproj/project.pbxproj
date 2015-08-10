@@ -14,6 +14,9 @@
 		313ED3B71B76201B00689FFC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 313ED3B51B76201B00689FFC /* LaunchScreen.xib */; };
 		313ED3C31B76201B00689FFC /* StoreSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313ED3C21B76201B00689FFC /* StoreSearchTests.swift */; };
 		313ED3CD1B762E5D00689FFC /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313ED3CC1B762E5D00689FFC /* SearchResult.swift */; };
+		313ED3CF1B76371900689FFC /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 313ED3CE1B76371900689FFC /* SearchResultCell.xib */; };
+		313ED3D11B763C1800689FFC /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313ED3D01B763C1800689FFC /* SearchResultCell.swift */; };
+		313ED3D31B7641A400689FFC /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 313ED3D21B7641A400689FFC /* NothingFoundCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +41,9 @@
 		313ED3C11B76201B00689FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		313ED3C21B76201B00689FFC /* StoreSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchTests.swift; sourceTree = "<group>"; };
 		313ED3CC1B762E5D00689FFC /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		313ED3CE1B76371900689FFC /* SearchResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
+		313ED3D01B763C1800689FFC /* SearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
+		313ED3D21B7641A400689FFC /* NothingFoundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +88,10 @@
 				313ED3AC1B76201B00689FFC /* AppDelegate.swift */,
 				313ED3AE1B76201B00689FFC /* SearchViewController.swift */,
 				313ED3CC1B762E5D00689FFC /* SearchResult.swift */,
+				313ED3D01B763C1800689FFC /* SearchResultCell.swift */,
 				313ED3B01B76201B00689FFC /* Main.storyboard */,
+				313ED3CE1B76371900689FFC /* SearchResultCell.xib */,
+				313ED3D21B7641A400689FFC /* NothingFoundCell.xib */,
 				313ED3B31B76201B00689FFC /* Images.xcassets */,
 				313ED3B51B76201B00689FFC /* LaunchScreen.xib */,
 				313ED3AA1B76201B00689FFC /* Supporting Files */,
@@ -197,6 +206,8 @@
 			files = (
 				313ED3B21B76201B00689FFC /* Main.storyboard in Resources */,
 				313ED3B71B76201B00689FFC /* LaunchScreen.xib in Resources */,
+				313ED3CF1B76371900689FFC /* SearchResultCell.xib in Resources */,
+				313ED3D31B7641A400689FFC /* NothingFoundCell.xib in Resources */,
 				313ED3B41B76201B00689FFC /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,6 +228,7 @@
 			files = (
 				313ED3AF1B76201B00689FFC /* SearchViewController.swift in Sources */,
 				313ED3CD1B762E5D00689FFC /* SearchResult.swift in Sources */,
+				313ED3D11B763C1800689FFC /* SearchResultCell.swift in Sources */,
 				313ED3AD1B76201B00689FFC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,6 +425,7 @@
 				313ED3C81B76201B00689FFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		313ED3C91B76201B00689FFC /* Build configuration list for PBXNativeTarget "StoreSearchTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +434,7 @@
 				313ED3CB1B76201B00689FFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
