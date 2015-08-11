@@ -44,7 +44,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="aritistNameLabel" destination="9ez-El-b6E" id="1Rx-nC-SfJ"/>
+                <outlet property="artistNameLabel" destination="9ez-El-b6E" id="bkv-pr-jIq"/>
                 <outlet property="artworkImageView" destination="UeD-IC-Cfx" id="gha-uG-we0"/>
                 <outlet property="nameLabel" destination="Sh0-WP-4wi" id="Twx-aM-QUp"/>
             </connections>
