@@ -17,6 +17,8 @@ class SearchViewController: UIViewController {
 	var hasSearched = false
 	var isLoading = false
 
+	var dataTask: NSURLSessionDataTask?
+
 	struct TableViewCellIdentofiers {
     	static let searchResultCell = "SearchResultCell"
 		static let nothingFoundCell = "NothingFoundCell"
@@ -226,6 +228,7 @@ extension SearchViewController: UISearchBarDelegate {
 		if !searchBar.text.isEmpty {
 			searchBar.resignFirstResponder()
 
+			dataTask?.cancel()
 			isLoading = true
 			tableView.reloadData()
 
@@ -234,9 +237,14 @@ extension SearchViewController: UISearchBarDelegate {
 
 			let url = self.urlWithSearchText(searchBar.text)
 			let session = NSURLSession.sharedSession()
-			let dataTask = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+			dataTask = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
 				if let error = error {
 					println("Failure! \(error)")
+
+					// when a data task gets cancelled its completion handler is still invoked but with an NSError object that has error code -999. That’s what caused the error alert to pop up.
+
+					if error.code == -999 { return }
+					
 				} else if let httpResponse = response as? NSHTTPURLResponse {
 
 					// How to tell whether a particular piece of code is being run on the main thread
@@ -272,7 +280,7 @@ extension SearchViewController: UISearchBarDelegate {
 				}
 			})
 
-			dataTask.resume()
+			dataTask?.resume()
 		}
 	}
 
