@@ -12,7 +12,11 @@ class SearchViewController: UIViewController {
 
 	@IBOutlet weak var searchBar: UISearchBar!
 	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var segmentedControl: UISegmentedControl!
 
+	@IBAction func segmentChanged(sender: UISegmentedControl) {
+		performSearch()
+	}
 	var searchResults = [SearchResult]()
 	var hasSearched = false
 	var isLoading = false
@@ -40,7 +44,7 @@ class SearchViewController: UIViewController {
 		tableView.registerNib(cellNib, forCellReuseIdentifier: TableViewCellIdentofiers.loadingCell)
 
 		tableView.rowHeight = 80
-		tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+		tableView.contentInset = UIEdgeInsets(top: 108, left: 0, bottom: 0, right: 0)
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -49,12 +53,20 @@ class SearchViewController: UIViewController {
 
 	// MARK: - Networking
 
-	func urlWithSearchText(searchText: String) -> NSURL {
+	func urlWithSearchText(searchText: String, category: Int) -> NSURL {
+
+		var entityName: String
+		switch category {
+			case 1: entityName = "musicTrack"
+			case 2: entityName = "software"
+			case 3: entityName = "ebook"
+			default: entityName = ""
+		}
 
 		// This calls the stringByAddingPercentEscapesUsingEncoding() method to escape the special characters, which returns a new string that you then use for the search term. In theory this method can return nil for certain encodings but because you chose the UTF-8 encoding here that won’t ever happen, so you can safely force-unwrap the return value with the exclamation point at the end. (You could also have used if let.)
 
 		let escapedSearchText = searchText.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-		let urlString = String(format: "http://itunes.apple.com/search?term=%@", escapedSearchText)
+		let urlString = String(format: "http://itunes.apple.com/search?term=%@&limit=200&entity=%@", escapedSearchText, entityName)
 		let url = NSURL(string: urlString)
 		return url!
 	}
@@ -201,30 +213,16 @@ class SearchViewController: UIViewController {
 		}
 		return searchResult
 	}
-
-	func kindForDisplay(kind: String) -> String {
-		switch kind {
-			case "album": return "Album"
-			case "audiobook": return "Audio Book"
-			case "book": return "Book"
-			case "ebook": return "E-Book"
-			case "feature-movie": return "Movie"
-			case "music-video": return "Music Video"
-			case "podcast": return "Podcast"
-			case "software": return "App"
-			case "song": return "Song"
-			case "tv-episode": return "TV Episode"
-			default: return kind
-		}
-	}
-
-
 }
 
 
 extension SearchViewController: UISearchBarDelegate {
 
 	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+		performSearch()
+	}
+
+	func performSearch() {
 		if !searchBar.text.isEmpty {
 			searchBar.resignFirstResponder()
 
@@ -235,7 +233,7 @@ extension SearchViewController: UISearchBarDelegate {
 			hasSearched = true
 			searchResults = [SearchResult]()
 
-			let url = self.urlWithSearchText(searchBar.text)
+			let url = self.urlWithSearchText(searchBar.text, category: segmentedControl.selectedSegmentIndex)
 			let session = NSURLSession.sharedSession()
 			dataTask = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
 				if let error = error {
@@ -319,19 +317,14 @@ extension SearchViewController: UITableViewDataSource {
 			return tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.nothingFoundCell, forIndexPath: indexPath) as! UITableViewCell
 		} else {
 			let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.searchResultCell, forIndexPath: indexPath) as! SearchResultCell
+
 			let searchResult = searchResults[indexPath.row]
-
-			cell.nameLabel?.text = searchResult.name
-
-			if searchResult.artistName.isEmpty {
-				cell.artistNameLabel.text = "Unknown"
-			} else {
-				cell.artistNameLabel.text = String(format: "%@ (%@)", searchResult.artistName, kindForDisplay(searchResult.kind))
-			}
+			cell.configureForSearchResults(searchResult)
 
 			return cell
 		}
 	}
+	
 }
 
 
