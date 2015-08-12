@@ -57,32 +57,15 @@ class SearchViewController: UIViewController {
 		return url!
 	}
 
-	func performStoreRequestWithURL(url: NSURL) -> String? {
+	func parseJOSN(data: NSData) -> [String: AnyObject]?  {
 		var error: NSError?
 
-		if let resultString = String(contentsOfURL: url, encoding: NSUTF8StringEncoding, error: &error) {
-			return resultString
+		if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error) as? [String: AnyObject] {
+			return json
 		} else if let error = error {
-			println("Download Error: \(error)")
+			println("JSON Error: \(error)")
 		} else {
-			println("Unknown Download Error")
-		}
-
-		return nil
-	}
-
-	func parseJOSN(jsonString: String) -> [String: AnyObject]?  {
-		if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
-			var error: NSError?
-
-			if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error) as? [String: AnyObject] {
-				return json
-			} else if let error = error {
-				println("JSON Error: \(error)")
-			} else {
-				println("Unknown JSON Error")
-			}
-
+			println("Unknown JSON Error")
 		}
 		return nil
 	}
@@ -249,58 +232,47 @@ extension SearchViewController: UISearchBarDelegate {
 			hasSearched = true
 			searchResults = [SearchResult]()
 
-			let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+			let url = self.urlWithSearchText(searchBar.text)
+			let session = NSURLSession.sharedSession()
+			let dataTask = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+				if let error = error {
+					println("Failure! \(error)")
+				} else if let httpResponse = response as? NSHTTPURLResponse {
 
-			dispatch_async(queue) {
+					// How to tell whether a particular piece of code is being run on the main thread
 
-				let url = self.urlWithSearchText(searchBar.text)
-				println("URL: '\(url)")
+					println("On the main thread? " + (NSThread.currentThread().isMainThread ? "Yes" : "No"))
 
-				if let jsonString = self.performStoreRequestWithURL(url) {
-					println("Received JSON string '\(jsonString)'")
+					// Because you’re using the HTTP protocol what you’ve really received is an NSHTTPURLResponse object, a subclass of NSURLResponse.
 
-					if let dictionary = self.parseJOSN(jsonString) {
-						println("Dictionary \(dictionary)")
+					if httpResponse.statusCode == 200 {
+						if let dictionary = self.parseJOSN(data) {
+							self.searchResults = self.parseDictionary(dictionary)
+							self.searchResults.sort(<)
 
-						self.searchResults = self.parseDictionary(dictionary)
-
-						/*
-						three other way doing this:
-
-						searchResults.sort { $0.name.localizedStandardCompare($1.name) == NSComparisonResult.OrderedAscending }
-
-						searchResults.sort({ (result1, result2) -> Bool in
-						return result1.name.localizedStandardCompare(result2.name) == NSComparisonResult.OrderedAscending
-
-						searchResults.sort({ (result1, result2) -> Bool in
-						return result1.name < result2.name
-						})
-
-						searchResults.sort { $0 < $1}
-
-						*/
-
-						self.searchResults.sort(<)
-						self.isLoading = false
-
-						// UIKit has a rule that all UI code should always be performed on the main thread.
-						// self.tableView.reloadData()
-
-						dispatch_async(dispatch_get_main_queue()) {
-							self.isLoading = false
-							self.tableView.reloadData()
+							dispatch_async(dispatch_get_main_queue()) {
+								self.isLoading = false
+								self.tableView.reloadData()
 							}
-						return
+
+							// Without return, self.showNetworkError()
+
+							return
+						}
+					} else {
+						println("Failure! \(response)")
 					}
 				}
-				dispatch_async(dispatch_get_main_queue()) {
 
-					// This method shows a UIAlertController, which is UI code and therefore needs to happen on the main thread.
-					
+				dispatch_async(dispatch_get_main_queue()) {
+					self.hasSearched = false
+					self.isLoading = false
+					self.tableView.reloadData()
 					self.showNetworkError()
 				}
-			}
+			})
 
+			dataTask.resume()
 		}
 	}
 
