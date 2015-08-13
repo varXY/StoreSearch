@@ -14,6 +14,8 @@ class SearchResultCell: UITableViewCell {
 	@IBOutlet weak var artistNameLabel: UILabel!
 	@IBOutlet weak var artworkImageView: UIImageView!
 
+	var downloadTask: NSURLSessionDownloadTask?
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -29,6 +31,19 @@ class SearchResultCell: UITableViewCell {
 		selectedBackgroundView.backgroundColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 0.5)
 	}
 
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		downloadTask?.cancel()
+		downloadTask = nil
+
+		nameLabel.text = nil
+		artistNameLabel.text = nil
+		artworkImageView.image = nil
+
+		println("resused")
+	}
+
 	func configureForSearchResults(searchResult: SearchResult) {
 		nameLabel.text = searchResult.name
 
@@ -36,6 +51,11 @@ class SearchResultCell: UITableViewCell {
 			artistNameLabel.text = "Unknown"
 		} else {
 			artistNameLabel.text = String(format: "%@ (%@)", searchResult.artistName, kindForDisplay(searchResult.kind))
+		}
+
+		artworkImageView.image = UIImage(named: "Placeholder")
+		if let url = NSURL(string: searchResult.artworkURL60) {
+			downloadTask = artworkImageView.loadImageWithURl(url)
 		}
 	}
 

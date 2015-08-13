@@ -14,9 +14,6 @@ class SearchViewController: UIViewController {
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var segmentedControl: UISegmentedControl!
 
-	@IBAction func segmentChanged(sender: UISegmentedControl) {
-		performSearch()
-	}
 	var searchResults = [SearchResult]()
 	var hasSearched = false
 	var isLoading = false
@@ -45,6 +42,10 @@ class SearchViewController: UIViewController {
 
 		tableView.rowHeight = 80
 		tableView.contentInset = UIEdgeInsets(top: 108, left: 0, bottom: 0, right: 0)
+	}
+
+	@IBAction func segmentChanged(sender: UISegmentedControl) {
+		performSearch()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -92,7 +93,7 @@ class SearchViewController: UIViewController {
 		presentViewController(alert, animated: true, completion: nil)
 	}
 
-	// MARK: 
+	// MARK: - ParseDictionary
 
 	func parseDictionary(dictionary: [String: AnyObject]) -> [SearchResult] {
 
@@ -324,7 +325,7 @@ extension SearchViewController: UITableViewDataSource {
 			return cell
 		}
 	}
-	
+
 }
 
 
