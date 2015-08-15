@@ -42,10 +42,33 @@ class SearchViewController: UIViewController {
 
 		tableView.rowHeight = 80
 		tableView.contentInset = UIEdgeInsets(top: 108, left: 0, bottom: 0, right: 0)
+
+	}
+
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+
+		listenForNotification()
 	}
 
 	@IBAction func segmentChanged(sender: UISegmentedControl) {
 		performSearch()
+	}
+
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if segue.identifier == "ShowDetail" {
+			let detailViewController = segue.destinationViewController as! DetailViewController
+			let indexPath = sender as! NSIndexPath
+			let searchResult = searchResults[indexPath.row]
+			detailViewController.searchResult = searchResult
+		}
+	}
+
+	func listenForNotification() {
+		NSNotificationCenter.defaultCenter().addObserverForName(UIContentSizeCategoryDidChangeNotification, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+			self.tableView.reloadData()
+			println("working!")
+		}
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -214,6 +237,7 @@ class SearchViewController: UIViewController {
 		}
 		return searchResult
 	}
+
 }
 
 
@@ -333,6 +357,7 @@ extension SearchViewController: UITableViewDelegate {
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
+		performSegueWithIdentifier("ShowDetail", sender: indexPath)
 	}
 
 	func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {

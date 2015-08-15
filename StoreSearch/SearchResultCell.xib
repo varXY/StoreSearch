@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -20,27 +21,27 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sh0-WP-4wi">
-                        <rect key="frame" x="90" y="15" width="222" height="22"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <rect key="frame" x="90" y="14" width="41" height="20"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ez-El-b6E">
-                        <rect key="frame" x="90" y="44" width="222" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <rect key="frame" x="90" y="42" width="36" height="17"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                         <color key="textColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="9ez-El-b6E" firstAttribute="leading" secondItem="UeD-IC-Cfx" secondAttribute="trailing" constant="15" id="8sZ-Kk-WkT"/>
-                    <constraint firstAttribute="bottom" secondItem="9ez-El-b6E" secondAttribute="bottom" constant="17" id="Kls-RU-pJ6"/>
-                    <constraint firstItem="Sh0-WP-4wi" firstAttribute="leading" secondItem="UeD-IC-Cfx" secondAttribute="trailing" constant="15" id="OOa-kS-ZbV"/>
-                    <constraint firstItem="Sh0-WP-4wi" firstAttribute="top" secondItem="gH6-Eb-woV" secondAttribute="top" constant="15" id="iu1-Fx-oU7"/>
+                    <constraint firstItem="9ez-El-b6E" firstAttribute="leading" secondItem="Sh0-WP-4wi" secondAttribute="leading" id="1QW-XF-1vq"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="9ez-El-b6E" secondAttribute="trailing" constant="10" id="Reb-N4-5Uh"/>
+                    <constraint firstItem="9ez-El-b6E" firstAttribute="top" secondItem="Sh0-WP-4wi" secondAttribute="bottom" constant="8" id="TDx-pk-ja3"/>
+                    <constraint firstItem="Sh0-WP-4wi" firstAttribute="leading" secondItem="UeD-IC-Cfx" secondAttribute="trailing" constant="15" id="YTd-hp-BFu"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Sh0-WP-4wi" secondAttribute="trailing" constant="10" id="hCo-Oj-U56"/>
                     <constraint firstItem="UeD-IC-Cfx" firstAttribute="top" secondItem="gH6-Eb-woV" secondAttribute="top" constant="10" id="keE-NX-sC3"/>
-                    <constraint firstAttribute="trailing" secondItem="Sh0-WP-4wi" secondAttribute="trailing" constant="8" id="onD-SK-8XS"/>
+                    <constraint firstItem="Sh0-WP-4wi" firstAttribute="top" secondItem="gH6-Eb-woV" secondAttribute="topMargin" constant="6" id="rID-Tv-qWm"/>
                     <constraint firstItem="UeD-IC-Cfx" firstAttribute="leading" secondItem="gH6-Eb-woV" secondAttribute="leading" constant="15" id="vTd-2J-UCV"/>
-                    <constraint firstAttribute="trailing" secondItem="9ez-El-b6E" secondAttribute="trailing" constant="8" id="yxX-vh-R5Q"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

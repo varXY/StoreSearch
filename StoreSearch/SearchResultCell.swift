@@ -31,6 +31,8 @@ class SearchResultCell: UITableViewCell {
 		selectedBackgroundView.backgroundColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 0.5)
 	}
 
+	// it’s theoretically possible that you’re scrolling through the table and some cell is about to be reused while its previous image is still loading. You no longer need that image so you should really cancel the pending download.
+
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
@@ -50,28 +52,12 @@ class SearchResultCell: UITableViewCell {
 		if searchResult.artistName.isEmpty {
 			artistNameLabel.text = "Unknown"
 		} else {
-			artistNameLabel.text = String(format: "%@ (%@)", searchResult.artistName, kindForDisplay(searchResult.kind))
+			artistNameLabel.text = String(format: "%@ (%@)", searchResult.artistName, searchResult.kindForDisplay())
 		}
 
 		artworkImageView.image = UIImage(named: "Placeholder")
 		if let url = NSURL(string: searchResult.artworkURL60) {
 			downloadTask = artworkImageView.loadImageWithURl(url)
-		}
-	}
-
-	func kindForDisplay(kind: String) -> String {
-		switch kind {
-		case "album": return "Album"
-		case "audiobook": return "Audio Book"
-		case "book": return "Book"
-		case "ebook": return "E-Book"
-		case "feature-movie": return "Movie"
-		case "music-video": return "Music Video"
-		case "podcast": return "Podcast"
-		case "software": return "App"
-		case "song": return "Song"
-		case "tv-episode": return "TV Episode"
-		default: return kind
 		}
 	}
 
