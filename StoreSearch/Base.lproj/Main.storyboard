@@ -71,7 +71,7 @@
                         <outlet property="searchBar" destination="ein-E4-9n7" id="nbI-MY-fTP"/>
                         <outlet property="segmentedControl" destination="wUu-Eh-NV1" id="hmk-Kq-Gxm"/>
                         <outlet property="tableView" destination="nRH-Be-4WZ" id="l1z-A8-oDf"/>
-                        <segue destination="3H8-hZ-qZs" kind="presentation" identifier="ShowDetail" modalTransitionStyle="crossDissolve" id="dHA-uV-fCs"/>
+                        <segue destination="3H8-hZ-qZs" kind="presentation" identifier="ShowDetail" id="dHA-uV-fCs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
