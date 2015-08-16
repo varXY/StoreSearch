@@ -20,6 +20,8 @@ class SearchViewController: UIViewController {
 
 	var dataTask: NSURLSessionDataTask?
 
+	var landscapeViewController: LandscapeViewController?
+
 	struct TableViewCellIdentofiers {
     	static let searchResultCell = "SearchResultCell"
 		static let nothingFoundCell = "NothingFoundCell"
@@ -49,6 +51,59 @@ class SearchViewController: UIViewController {
 		super.viewWillAppear(animated)
 
 		listenForNotification()
+	}
+
+	override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+		super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
+
+		switch newCollection.verticalSizeClass {
+		case .Compact:
+			showLandscapeViewWithCoordinator(coordinator)
+		case .Regular, .Unspecified:
+			hidelandscapeViewWithCoordinator(coordinator)
+
+		}
+	}
+
+	func showLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator) {
+		precondition(landscapeViewController == nil)
+
+		landscapeViewController = storyboard!.instantiateViewControllerWithIdentifier("LandscapeViewController") as? LandscapeViewController
+
+		if let controller = landscapeViewController {
+			controller.view.frame = view.bounds
+			controller.view.alpha = 0
+
+			view.addSubview(controller.view)
+			addChildViewController(controller)
+
+			coordinator.animateAlongsideTransition({ (_) -> Void in
+				controller.view.alpha = 1
+				self.searchBar.resignFirstResponder()
+
+				if self.presentedViewController != nil {
+					self.dismissViewControllerAnimated(true, completion: nil)
+				}
+				
+			}, completion: { (_) -> Void in
+				controller.didMoveToParentViewController(self)
+			})
+		}
+	}
+
+	func hidelandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator) {
+		if let controller = landscapeViewController {
+			controller.willMoveToParentViewController(nil)
+
+			coordinator.animateAlongsideTransition({ (_) -> Void in
+				controller.view.alpha = 0
+			}, completion: { (_) -> Void in
+				controller.view.removeFromSuperview()
+				controller.removeFromParentViewController()
+				self.landscapeViewController = nil
+			})
+
+		}
 	}
 
 	@IBAction func segmentChanged(sender: UISegmentedControl) {

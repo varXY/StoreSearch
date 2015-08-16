@@ -13,6 +13,10 @@ class GradientView: UIView {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		backgroundColor = UIColor.clearColor()
+
+		// This tells the view that it should change both its width and its height proportionally when the superview it belongs to resizes (due to being rotated or otherwise). In practice this means the GradientView will always cover the same area that its superview covers and there should be no more gaps, even if the device gets rotated.
+		
+		autoresizingMask = .FlexibleWidth | .FlexibleHeight
 	}
 
 	// init(coder), is never used in this app. However, UIView demands that all subclasses implement init(coder)
@@ -20,6 +24,7 @@ class GradientView: UIView {
 	required init(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		backgroundColor = UIColor.clearColor()
+		autoresizingMask = .FlexibleWidth | .FlexibleHeight
 	}
 
 	override func drawRect(rect: CGRect) {

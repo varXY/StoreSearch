@@ -1,29 +1,25 @@
 //
-//  SildeOutAnimationController.swift
+//  FadeOutAnimationController.swift
 //  StoreSearch
 //
-//  Created by 文川术 on 15/8/15.
+//  Created by 文川术 on 15/8/16.
 //  Copyright (c) 2015年 xiaoyao. All rights reserved.
 //
 
 import UIKit
 
-class SlideOutAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
+class FadeOutAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
 	func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
-		return 0.3
+		return 0.4
 	}
 
 	func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-
 		if let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey) {
 			let duration = transitionDuration(transitionContext)
-			let containerView = transitionContext.containerView()
 
 			UIView.animateWithDuration(duration, animations: { () -> Void in
-				fromView.center.y -= containerView.bounds.size.height
-				fromView.transform = CGAffineTransformMakeScale(0.5, 0.5)
-				fromView.transform = CGAffineTransformMakeRotation(14.6)
+				fromView.alpha = 0
 			}, completion: { (finished) -> Void in
 				transitionContext.completeTransition(finished)
 			})

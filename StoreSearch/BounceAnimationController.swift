@@ -35,10 +35,14 @@ class BounceAnimationController: NSObject, UIViewControllerAnimatedTransitioning
 
 					UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.334, animations: { () -> Void in
 						toView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+
+						toView.transform = CGAffineTransformMakeRotation(CGFloat(14.5))
+
 					})
 
 					UIView.addKeyframeWithRelativeStartTime(0.334, relativeDuration: 0.333, animations: { () -> Void in
 						toView.transform = CGAffineTransformMakeScale(0.9, 0.9)
+						toView.transform = CGAffineTransformMakeRotation(CGFloat(-14.5))
 					})
 
 					UIView.addKeyframeWithRelativeStartTime(0.666, relativeDuration: 0.333, animations: { () -> Void in
