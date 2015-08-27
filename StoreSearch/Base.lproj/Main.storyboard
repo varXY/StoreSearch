@@ -90,19 +90,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="we're landscape" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMz-P7-kQW">
-                                <rect key="frame" x="237" y="289" width="126" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nGw-6t-oda">
+                                <rect key="frame" x="-1" y="1" width="600" height="600"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="0NO-sW-eQM">
+                                <rect key="frame" x="273" y="500" width="53" height="37"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="GMz-P7-kQW" secondAttribute="centerX" id="4sk-dQ-E8G"/>
-                            <constraint firstAttribute="centerY" secondItem="GMz-P7-kQW" secondAttribute="centerY" id="nmd-Yj-mew"/>
-                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pageControl" destination="0NO-sW-eQM" id="SHZ-F0-EH0"/>
+                        <outlet property="scrollView" destination="nGw-6t-oda" id="8Fg-5P-6ml"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F8n-XJ-3xh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
