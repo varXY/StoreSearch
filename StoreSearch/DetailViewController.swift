@@ -125,6 +125,6 @@ extension DetailViewController: UIViewControllerTransitioningDelegate {
 extension DetailViewController: UIGestureRecognizerDelegate {
 
 	func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-		return (touch.view === view)
+		return (touch.view === self.view)
 	}
 }

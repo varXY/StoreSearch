@@ -49,7 +49,6 @@ class SearchViewController: UIViewController {
 
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
-
 		listenForNotification()
 	}
 
@@ -316,7 +315,7 @@ extension SearchViewController: UISearchBarDelegate {
 
 			let url = self.urlWithSearchText(searchBar.text, category: segmentedControl.selectedSegmentIndex)
 			let session = NSURLSession.sharedSession()
-			dataTask = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+			dataTask = session.dataTaskWithURL(url) { data, response, error in
 				if let error = error {
 					println("Failure! \(error)")
 
@@ -357,7 +356,7 @@ extension SearchViewController: UISearchBarDelegate {
 					self.tableView.reloadData()
 					self.showNetworkError()
 				}
-			})
+			}
 
 			dataTask?.resume()
 		}

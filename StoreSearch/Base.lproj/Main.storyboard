@@ -90,11 +90,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nGw-6t-oda">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nGw-6t-oda">
                                 <rect key="frame" x="-1" y="1" width="600" height="600"/>
+                                <connections>
+                                    <outlet property="delegate" destination="3zS-Dh-ifO" id="A10-mr-lXk"/>
+                                </connections>
                             </scrollView>
                             <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="0NO-sW-eQM">
                                 <rect key="frame" x="273" y="500" width="53" height="37"/>
+                                <connections>
+                                    <action selector="pageChanged:" destination="3zS-Dh-ifO" eventType="valueChanged" id="svT-8b-gZX"/>
+                                </connections>
                             </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

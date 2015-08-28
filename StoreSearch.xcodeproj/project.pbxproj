@@ -84,12 +84,12 @@
 			isa = PBXGroup;
 			children = (
 				313ED3AE1B76201B00689FFC /* SearchViewController.swift */,
+				311B98541B80621E001B6156 /* LandscapeViewController.swift */,
 				318EF2981B7CCB0500C7A2E5 /* DetailViewController.swift */,
 				318EF29A1B7CCFD800C7A2E5 /* DimmingPresentationController.swift */,
 				3152A5F01B7F824E00F2C2A8 /* BounceAnimationController.swift */,
 				3152A5F21B7F962700F2C2A8 /* SildeOutAnimationController.swift */,
 				311B98561B8076B8001B6156 /* FadeOutAnimationController.swift */,
-				311B98541B80621E001B6156 /* LandscapeViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";

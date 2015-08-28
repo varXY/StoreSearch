@@ -32,7 +32,7 @@ extension UIImageView {
 
 		// After creating the download task you call resume() to start it, and then return the 
 		// NSURLSessionDownloadTask object to the caller. Why return it? That gives the app the opportunity  
-		// to call cancel() on the download task. You’ll see how that works in a minute.
+		// to call cancel() on the download task.
 		
 		downloadTask.resume()
 		return downloadTask
