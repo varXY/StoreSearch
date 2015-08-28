@@ -145,11 +145,14 @@ class LandscapeViewController: UIViewController {
 				if error == nil && url != nil {
 					if let data = NSData(contentsOfURL: url) {
 						if let image = UIImage(data: data) {
+							var image = image.resizedImageWithBounds(CGSize(width: 60, height: 60))
+
 							dispatch_async(dispatch_get_main_queue()) {
 								if let button = button {
 									button.setImage(image, forState: .Normal)
 								}
 							}
+
 						}
 					}
 				}

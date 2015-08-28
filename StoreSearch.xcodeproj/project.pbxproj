@@ -21,6 +21,7 @@
 		3152A5EF1B7F78E000F2C2A8 /* GrandientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3152A5EE1B7F78E000F2C2A8 /* GrandientView.swift */; };
 		3152A5F11B7F824E00F2C2A8 /* BounceAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3152A5F01B7F824E00F2C2A8 /* BounceAnimationController.swift */; };
 		3152A5F31B7F962700F2C2A8 /* SildeOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3152A5F21B7F962700F2C2A8 /* SildeOutAnimationController.swift */; };
+		318101841B9040CB005E3F00 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318101831B9040CB005E3F00 /* UIImage+Resize.swift */; };
 		318EF2971B7CBFC900C7A2E5 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318EF2961B7CBFC900C7A2E5 /* UIImageView+DownloadImage.swift */; };
 		318EF2991B7CCB0500C7A2E5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318EF2981B7CCB0500C7A2E5 /* DetailViewController.swift */; };
 		318EF29B1B7CCFD800C7A2E5 /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318EF29A1B7CCFD800C7A2E5 /* DimmingPresentationController.swift */; };
@@ -56,6 +57,7 @@
 		3152A5EE1B7F78E000F2C2A8 /* GrandientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrandientView.swift; sourceTree = "<group>"; };
 		3152A5F01B7F824E00F2C2A8 /* BounceAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BounceAnimationController.swift; sourceTree = "<group>"; };
 		3152A5F21B7F962700F2C2A8 /* SildeOutAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SildeOutAnimationController.swift; sourceTree = "<group>"; };
+		318101831B9040CB005E3F00 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		318EF2961B7CBFC900C7A2E5 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		318EF2981B7CCB0500C7A2E5 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		318EF29A1B7CCFD800C7A2E5 /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				3152A5EE1B7F78E000F2C2A8 /* GrandientView.swift */,
 				313ED3CC1B762E5D00689FFC /* SearchResult.swift */,
 				318EF2961B7CBFC900C7A2E5 /* UIImageView+DownloadImage.swift */,
+				318101831B9040CB005E3F00 /* UIImage+Resize.swift */,
 			);
 			name = "Models&Views";
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				311B98571B8076B8001B6156 /* FadeOutAnimationController.swift in Sources */,
 				318EF29B1B7CCFD800C7A2E5 /* DimmingPresentationController.swift in Sources */,
 				313ED3CD1B762E5D00689FFC /* SearchResult.swift in Sources */,
+				318101841B9040CB005E3F00 /* UIImage+Resize.swift in Sources */,
 				313ED3D11B763C1800689FFC /* SearchResultCell.swift in Sources */,
 				311B98551B80621E001B6156 /* LandscapeViewController.swift in Sources */,
 				3152A5F11B7F824E00F2C2A8 /* BounceAnimationController.swift in Sources */,
