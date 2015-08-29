@@ -93,6 +93,11 @@ class SearchViewController: UIViewController {
 
 			coordinator.animateAlongsideTransition({ (_) -> Void in
 				controller.view.alpha = 0
+
+				if self.presentedViewController != nil {
+					self.dismissViewControllerAnimated(true, completion: nil)
+				}
+				
 			}, completion: { (_) -> Void in
 				controller.view.removeFromSuperview()
 				controller.removeFromParentViewController()
@@ -108,10 +113,16 @@ class SearchViewController: UIViewController {
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "ShowDetail" {
-			let detailViewController = segue.destinationViewController as! DetailViewController
-			let indexPath = sender as! NSIndexPath
-			let searchResult = search.searchResults[indexPath.row]
-			detailViewController.searchResult = searchResult
+			switch search.state {
+			case .Results(let list):
+				let detailViewController = segue.destinationViewController as! DetailViewController
+				let indexPath = sender as! NSIndexPath
+				let searchResult = list[indexPath.row]
+				detailViewController.searchResult = searchResult
+			default:
+				break
+			}
+
 		}
 	}
 
@@ -148,17 +159,25 @@ extension SearchViewController: UISearchBarDelegate {
 	}
 
 	func performSearch() {
-		search.performSearchForText(searchBar.text, category: segmentedControl.selectedSegmentIndex, completion: { success in
+		if let category = Search.Category(rawValue: segmentedControl.selectedSegmentIndex) {
 
-			if !success {
-				self.showNetworkError()
-			}
+			search.performSearchForText(searchBar.text, category: category, completion: { success in
 
-			self.tableView.reloadData()
-		})
+				if !success {
+					self.showNetworkError()
+				}
+
+				if let controller = self.landscapeViewController {
+					controller.searchResultsReceived()
+				}
+
+				self.tableView.reloadData()
+			})
 
 		tableView.reloadData()
 		searchBar.resignFirstResponder()
+			
+		}
 	}
 
 	func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
@@ -171,33 +190,39 @@ extension SearchViewController: UITableViewDataSource {
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-		if search.isLoading {
-			return 1
-		} else if !search.hasSearched {
+		switch search.state {
+		case .NotSearchedYet:
 			return 0
-		} else if search.searchResults.count == 0 {
+		case .Loading:
 			return 1
-		} else {
-			return search.searchResults.count
+		case .NoResults:
+			return 1
+		case .Results(let list):
+			return list.count
 		}
 	}
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-		if search.isLoading {
+		switch search.state {
+
+		case .NotSearchedYet:
+			fatalError("Should never get here")
+
+		case .Loading:
 			let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.loadingCell, forIndexPath: indexPath) as! UITableViewCell
 			let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
 			spinner.startAnimating()
 
 			return cell
-		}
 
-		if search.searchResults.count == 0 {
+		case .NoResults:
 			return tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.nothingFoundCell, forIndexPath: indexPath) as! UITableViewCell
-		} else {
+
+		case .Results(let list):
 			let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.searchResultCell, forIndexPath: indexPath) as! SearchResultCell
 
-			let searchResult = search.searchResults[indexPath.row]
+			let searchResult = list[indexPath.row]
 			cell.configureForSearchResults(searchResult)
 
 			return cell
@@ -215,9 +240,10 @@ extension SearchViewController: UITableViewDelegate {
 	}
 
 	func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-		if search.searchResults.count == 0 || search.isLoading {
+		switch search.state {
+		case .NotSearchedYet, .Loading, .NoResults:
 			return nil
-		} else {
+		case .Results(let list):
 			return indexPath
 		}
 	}

@@ -7,29 +7,35 @@
 //
 
 import Foundation
+import UIKit
 
 typealias SearchComplete = (Bool) -> Void
 
 class Search {
-	var searchResults = [SearchResult]()
-	var hasSearched = false
-	var isLoading = false
 
+	enum State {
+		case NotSearchedYet
+		case Loading
+		case NoResults
+		case Results([SearchResult])
+	}
+
+	private(set) var state: State = .NotSearchedYet
 	private var dataTask: NSURLSessionDataTask? = nil
 
-	func performSearchForText(text: String, category: Int, completion: SearchComplete) {
+	func performSearchForText(text: String, category: Category, completion: SearchComplete) {
 		if !text.isEmpty {
 			dataTask?.cancel()
 
-			isLoading = true
-			hasSearched = true
-			searchResults = [SearchResult]()
+			UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+			state = .Loading
 
 			let url = urlWithSearchText(text, category: category)
 
 			let session = NSURLSession.sharedSession()
 			dataTask = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
 
+				self.state = .NotSearchedYet
 				var success = false
 
 				if let error = error {
@@ -37,22 +43,20 @@ class Search {
 				} else if let httpResponse = response as? NSHTTPURLResponse {
 					if httpResponse.statusCode == 200 {
 						if let dictionary = self.parseJOSN(data) {
-							self.searchResults = self.parseDictionary(dictionary)
-							self.searchResults.sort(<)
-
-							println("Success! ")
-							self.isLoading = false
+							var searchResults = self.parseDictionary(dictionary)
+							if searchResults.isEmpty {
+								self.state = .NoResults
+							} else {
+								searchResults.sort(<)
+								self.state = .Results(searchResults)
+							}
 							success = true
 						}
 					}
 				}
 
-				if !success {
-					self.hasSearched = false
-					self.isLoading = false
-				}
-
 				dispatch_async(dispatch_get_main_queue()) {
+					UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 					completion(success)
 				}
 			})
@@ -63,15 +67,9 @@ class Search {
 
 	// MARK: - Networking
 
-	private func urlWithSearchText(searchText: String, category: Int) -> NSURL {
+	private func urlWithSearchText(searchText: String, category: Category) -> NSURL {
 
-		var entityName: String
-		switch category {
-		case 1: entityName = "musicTrack"
-		case 2: entityName = "software"
-		case 3: entityName = "ebook"
-		default: entityName = ""
-		}
+		let entityName = category.entityName
 
 		// This calls the stringByAddingPercentEscapesUsingEncoding() method to escape the special characters, which returns a new string that you then use for the search term. In theory this method can return nil for certain encodings but because you chose the UTF-8 encoding here that won’t ever happen, so you can safely force-unwrap the return value with the exclamation point at the end. (You could also have used if let.)
 
@@ -214,5 +212,23 @@ class Search {
 			searchResult.genre = ", ".join(genres as! [String])
 		}
 		return searchResult
+	}
+
+	// MARk: 
+
+	enum Category: Int {
+		case All = 0
+		case Music = 1
+		case Software = 2
+		case EBook = 3
+
+		var entityName: String {
+			switch self {
+			case .All: return ""
+			case .Music: return "musicTrack"
+			case .Software: return "software"
+			case .EBook: return "ebook"
+			}
+		}
 	}
 }
