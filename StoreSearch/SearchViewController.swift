@@ -55,7 +55,7 @@ class SearchViewController: UIViewController {
 		case .Compact:
 			showLandscapeViewWithCoordinator(coordinator)
 		case .Regular, .Unspecified:
-			hidelandscapeViewWithCoordinator(coordinator)
+			hideLandscapeViewWithCoordinator(coordinator)
 
 		}
 	}
@@ -87,7 +87,7 @@ class SearchViewController: UIViewController {
 		}
 	}
 
-	func hidelandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator) {
+	func hideLandscapeViewWithCoordinator(coordinator: UIViewControllerTransitionCoordinator) {
 		if let controller = landscapeViewController {
 			controller.willMoveToParentViewController(nil)
 
@@ -142,7 +142,7 @@ class SearchViewController: UIViewController {
 	
 
 	func showNetworkError() {
-		let alert = UIAlertController(title: "Whoops...", message: "There was an error reading from the iTunes Store. Please try again.", preferredStyle: .Alert)
+		let alert = UIAlertController(title: NSLocalizedString("Whoops...", comment: "hey"), message: "There was an error reading from the iTunes Store. Please try again.", preferredStyle: .Alert)
 		let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
 		alert.addAction(action)
 

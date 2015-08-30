@@ -83,7 +83,7 @@ class DetailViewController: UIViewController {
 
 		var priceText: String
 		if searchResult.price == 0 {
-			priceText = "Free"
+			priceText = NSLocalizedString("Free", comment: "for the price")
 		} else if let text = formatter.stringFromNumber(searchResult.price) {
 			priceText = text
 		} else {
