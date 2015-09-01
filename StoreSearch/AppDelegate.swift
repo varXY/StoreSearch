@@ -13,6 +13,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
+	var splitViewController: UISplitViewController {
+		return window!.rootViewController as! UISplitViewController
+	}
+
+	var searchViewController: SearchViewController {
+		return splitViewController.viewControllers.first as! SearchViewController
+	}
+
+	var detailNavigationController: UINavigationController {
+		return splitViewController.viewControllers.last as! UINavigationController
+	}
+
+	var detailViewController: DetailViewController {
+		return detailNavigationController.topViewController as! DetailViewController
+	}
+
 	func customizeAppearance() {
 		let barTintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
 
@@ -22,6 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
+		detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
+
+		searchViewController.splitViewDetail = detailViewController
 		customizeAppearance()
 		return true
 	}

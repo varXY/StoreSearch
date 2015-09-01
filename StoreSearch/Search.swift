@@ -70,12 +70,16 @@ class Search {
 	private func urlWithSearchText(searchText: String, category: Category) -> NSURL {
 
 		let entityName = category.entityName
+		let locale = NSLocale.autoupdatingCurrentLocale()
+		let language = locale.localeIdentifier
+		let countryCode = locale.objectForKey(NSLocaleCountryCode) as! String
 
 		// This calls the stringByAddingPercentEscapesUsingEncoding() method to escape the special characters, which returns a new string that you then use for the search term. In theory this method can return nil for certain encodings but because you chose the UTF-8 encoding here that won’t ever happen, so you can safely force-unwrap the return value with the exclamation point at the end. (You could also have used if let.)
 
 		let escapedSearchText = searchText.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-		let urlString = String(format: "http://itunes.apple.com/search?term=%@&limit=50&entity=%@", escapedSearchText, entityName)
+		let urlString = String(format: "http://itunes.apple.com/search?term=%@&limit=50&entity=%@&lang=%@&counttry=%@", escapedSearchText, entityName, language, countryCode)
 		let url = NSURL(string: urlString)
+		println("URL: \(url!)")
 		return url!
 	}
 

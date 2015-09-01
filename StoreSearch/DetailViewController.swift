@@ -18,7 +18,14 @@ class DetailViewController: UIViewController {
 	@IBOutlet weak var genreLabel: UILabel!
 	@IBOutlet weak var priceButton: UIButton!
 
-	var searchResult: SearchResult!
+	var isPopUp = false
+	var searchResult: SearchResult! {
+		didSet {
+			if isViewLoaded() {
+				updateUI()
+			}
+		}
+	}
 	var downloadTask: NSURLSessionDownloadTask?
 
 	enum AnimationStyle {
@@ -37,16 +44,26 @@ class DetailViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		view.backgroundColor = UIColor.clearColor()
-
 		view.tintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
 
 		popupView.layer.cornerRadius = 10
 
-		let gestureRecognizer = UITapGestureRecognizer(target: self, action: ("close"))
-		gestureRecognizer.cancelsTouchesInView = false
-		gestureRecognizer.delegate = self
-		view.addGestureRecognizer(gestureRecognizer)
+		if isPopUp {
+			let gestureRecognizer = UITapGestureRecognizer(target: self, action: ("close"))
+			gestureRecognizer.cancelsTouchesInView = false
+			gestureRecognizer.delegate = self
+			view.addGestureRecognizer(gestureRecognizer)
+
+			view.backgroundColor = UIColor.clearColor()
+		} else {
+			view.backgroundColor = UIColor(patternImage: UIImage(named: "LandscapeBackground")!)
+			popupView.hidden = true
+
+			if let displayName = NSBundle.mainBundle().localizedInfoDictionary?["CFBundleDisplayName"] as? NSString {
+				title = displayName as String
+			}
+		}
+
 
 		if searchResult != nil {
 			updateUI()
@@ -65,6 +82,8 @@ class DetailViewController: UIViewController {
 	}
 
 	func updateUI() {
+		popupView.hidden = false
+		
 		nameLabel.text = searchResult.name
 
 		if searchResult.artistName.isEmpty {
@@ -79,7 +98,6 @@ class DetailViewController: UIViewController {
 		let formatter = NSNumberFormatter()
 		formatter.numberStyle = .CurrencyStyle
 		formatter.currencyCode = searchResult.currency
-		println(formatter.currencyCode)
 
 		var priceText: String
 		if searchResult.price == 0 {
