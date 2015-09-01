@@ -16,6 +16,8 @@ class SearchViewController: UIViewController {
 
 	let search = Search()
 
+	var tempCurrentPage: Int = 0
+
 	var landscapeViewController: LandscapeViewController?
 
 	struct TableViewCellIdentofiers {
@@ -70,6 +72,9 @@ class SearchViewController: UIViewController {
 			controller.view.alpha = 0
 			controller.search = search
 
+			controller.pageFromSearchVC = true
+			controller.currentPage = tempCurrentPage
+
 			view.addSubview(controller.view)
 			addChildViewController(controller)
 
@@ -101,6 +106,8 @@ class SearchViewController: UIViewController {
 			}, completion: { (_) -> Void in
 				controller.view.removeFromSuperview()
 				controller.removeFromParentViewController()
+				self.tempCurrentPage = controller.currentPage
+				println("SearchVC's page: \(self.tempCurrentPage)")
 				self.landscapeViewController = nil
 			})
 
@@ -159,6 +166,9 @@ extension SearchViewController: UISearchBarDelegate {
 	}
 
 	func performSearch() {
+
+		tempCurrentPage = 0
+
 		if let category = Search.Category(rawValue: segmentedControl.selectedSegmentIndex) {
 
 			search.performSearchForText(searchBar.text, category: category, completion: { success in

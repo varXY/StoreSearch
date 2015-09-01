@@ -14,6 +14,9 @@ class LandscapeViewController: UIViewController {
 	@IBOutlet weak var pageControl: UIPageControl!
 
 	var search: Search!
+	var currentPage: Int = 0
+	var move = [Int]()
+	var pageFromSearchVC: Bool = false
 
 	private var downloadTasks = [NSURLSessionDownloadTask]()
 	
@@ -42,6 +45,10 @@ class LandscapeViewController: UIViewController {
 		// scrollView.contentSize = CGSize(width: 1000, height: 1000)
 
 		pageControl.numberOfPages = 0
+
+	}
+
+	override func viewWillAppear(animated: Bool) {
 	}
 
 	override func viewWillLayoutSubviews() {
@@ -57,6 +64,7 @@ class LandscapeViewController: UIViewController {
 
 		if firstTime {
 			firstTime = false
+			// help to jump out a dead loop.
 
 			switch search.state {
 			case .NotSearchedYet:
@@ -68,6 +76,14 @@ class LandscapeViewController: UIViewController {
 			case .Results(let list):
 				tileButtons(list)
 			}
+		}
+	}
+
+	override func viewDidLayoutSubviews() {
+
+		if currentPage != 0 && pageFromSearchVC {
+			pageControl.currentPage = currentPage
+			scrollView.contentOffset = CGPoint(x: self.scrollView.bounds.size.width * CGFloat(self.pageControl.currentPage), y: 0)
 		}
 	}
 
@@ -188,8 +204,6 @@ class LandscapeViewController: UIViewController {
 		println("Number of pages: \(numPages)")
 
 		pageControl.numberOfPages = numPages
-		pageControl.currentPage = 0
-
 	}
 
 	private func downloadImageForSearchResult(searchResult: SearchResult, andPlaceOnButton button: UIButton) {
@@ -246,9 +260,36 @@ class LandscapeViewController: UIViewController {
 extension LandscapeViewController: UIScrollViewDelegate {
 
 	func scrollViewDidScroll(scrollView: UIScrollView) {
-		let width = scrollView.bounds.size.width
-		let currentPage = Int((scrollView.contentOffset.x + width/2) / width)
-		pageControl.currentPage = currentPage
+
+		let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+
+		dispatch_async(queue) {
+			let width = scrollView.bounds.size.width
+			var nextPage = Int((scrollView.contentOffset.x + width/2) / width)
+
+			self.move.append(nextPage)
+
+			println(nextPage)
+			println(scrollView.contentOffset)
+			println("arry's 0: \(self.move.last)")
+
+			if self.move.count >= 2 {
+				if self.move.last > self.move[self.move.count - 2] {
+					self.currentPage += 1
+					println("++ \(nextPage)")
+				}
+				if self.move.last < self.move[self.move.count - 2] {
+					self.currentPage -= 1
+					println("-- \(nextPage)")
+				}
+			}
+
+			dispatch_async(dispatch_get_main_queue()) {
+				self.pageControl.currentPage = self.currentPage
+			}
+		}
+
+		println("LandscapeCurrentPage: \(self.currentPage)")
 	}
 
 	@IBAction func pageChanged(sender: UIPageControl) {
