@@ -10,13 +10,13 @@ import UIKit
 
 class DimmingPresentationController: UIPresentationController {
 
-	lazy var dimmingView = GradientView(frame: CGRect.zeroRect)
+	lazy var dimmingView = GradientView(frame: CGRect.zero)
 
 	// The presentationTransitionWillBegin() method is invoked when the new view controller is about to be shown on the screen. Here you create the GradientView object, make it as big as the containerView, and insert it behind everything else in this “container view”.
 	
 	override func presentationTransitionWillBegin() {
-		dimmingView.frame = containerView.bounds
-		containerView.insertSubview(dimmingView, atIndex: 0)
+		dimmingView.frame = containerView!.bounds
+		containerView!.insertSubview(dimmingView, atIndex: 0)
 
 		dimmingView.alpha = 0
 

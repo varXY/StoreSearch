@@ -28,14 +28,14 @@ class LandscapeViewController: UIViewController {
 		// Here you’re going to do your own layout.
 		// setTranslatesAutoresizingMaskIntoConstraints(true). That allows you to position and size your views manually by changing their frame property.
 
-		view.removeConstraints(view.constraints())
-		view.setTranslatesAutoresizingMaskIntoConstraints(true)
+		view.removeConstraints(view.constraints)
+		view.translatesAutoresizingMaskIntoConstraints = true
 
-		pageControl.removeConstraints(pageControl.constraints())
-		pageControl.setTranslatesAutoresizingMaskIntoConstraints(true)
+		pageControl.removeConstraints(pageControl.constraints)
+		pageControl.translatesAutoresizingMaskIntoConstraints = true
 
-		scrollView.removeConstraints(scrollView.constraints())
-		scrollView.setTranslatesAutoresizingMaskIntoConstraints(true)
+		scrollView.removeConstraints(scrollView.constraints)
+		scrollView.translatesAutoresizingMaskIntoConstraints = true
 
 		// UIColor has a cool trick that lets you use a tile- able image for a color. By setting this image as a pattern image on the background you get a repeatable image that fills the whole screen.
 		
@@ -113,7 +113,7 @@ class LandscapeViewController: UIViewController {
 	}
 
 	private func showNothingFoundLabel() {
-		let label = UILabel(frame: CGRect.zeroRect)
+		let label = UILabel(frame: CGRect.zero)
 		label.text = NSLocalizedString("Nothing Found", comment: "Landscape Nothing Found")
 		label.backgroundColor = UIColor.clearColor()
 		label.textColor = UIColor.whiteColor()
@@ -172,9 +172,9 @@ class LandscapeViewController: UIViewController {
 		var column = 0
 		var x = marginX
 
-		for (index, searchResult) in enumerate(searchResults) {
+		for (index, searchResult) in searchResults.enumerate() {
 
-			let button = UIButton.buttonWithType(.Custom) as! UIButton
+			let button = UIButton(type: .Custom)
 			button.setBackgroundImage(UIImage(named: "LandscapeButton"), forState: .Normal)
 			button.frame = CGRect(x: x + paddingHorz, y: marginY + CGFloat(row)*itemHeight + paddingVert, width: buttonWidth, height: buttonHeight)
 			downloadImageForSearchResult(searchResult, andPlaceOnButton: button)
@@ -201,8 +201,6 @@ class LandscapeViewController: UIViewController {
 
 		scrollView.contentSize = CGSize(width: CGFloat(numPages)*scrollViewWidth, height: scrollView.bounds.size.height)
 
-		println("Number of pages: \(numPages)")
-
 		pageControl.numberOfPages = numPages
 	}
 
@@ -211,9 +209,9 @@ class LandscapeViewController: UIViewController {
 			let session = NSURLSession.sharedSession()
 			let downloadTask = session.downloadTaskWithURL(url, completionHandler: { [weak button] url, response, error -> Void in
 				if error == nil && url != nil {
-					if let data = NSData(contentsOfURL: url) {
+					if let data = NSData(contentsOfURL: url!) {
 						if let image = UIImage(data: data) {
-							var image = image.resizedImageWithBounds(CGSize(width: 60, height: 60))
+							let image = image.resizedImageWithBounds(CGSize(width: 60, height: 60))
 
 							dispatch_async(dispatch_get_main_queue()) {
 								if let button = button {
@@ -249,7 +247,6 @@ class LandscapeViewController: UIViewController {
 	}
 
 	deinit {
-		println("deinit \(self)")
 
 		for task in downloadTasks {
 			task.cancel()
@@ -266,22 +263,16 @@ extension LandscapeViewController: UIScrollViewDelegate {
 
 		dispatch_async(queue) {
 			let width = scrollView.bounds.size.width
-			var nextPage = Int((scrollView.contentOffset.x + width/2) / width)
+			let nextPage = Int((scrollView.contentOffset.x + width/2) / width)
 
 			self.move.append(nextPage)
-
-			println(nextPage)
-			println(scrollView.contentOffset)
-			println("arry's 0: \(self.move.last)")
 
 			if self.move.count >= 2 {
 				if self.move.last > self.move[self.move.count - 2] {
 					self.currentPage += 1
-					println("++ \(nextPage)")
 				}
 				if self.move.last < self.move[self.move.count - 2] {
 					self.currentPage -= 1
-					println("-- \(nextPage)")
 				}
 			}
 
@@ -290,7 +281,6 @@ extension LandscapeViewController: UIScrollViewDelegate {
 			}
 		}
 
-		println("LandscapeCurrentPage: \(self.currentPage)")
 	}
 
 	@IBAction func pageChanged(sender: UIPageControl) {

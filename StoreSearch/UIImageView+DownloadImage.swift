@@ -15,10 +15,8 @@ extension UIImageView {
 
 		let downloadTask = session.downloadTaskWithURL(url, completionHandler: { [weak self] url, response, error in
 			if error == nil && url != nil {
-				if let data = NSData(contentsOfURL: url) {
+				if let data = NSData(contentsOfURL: url!) {
 					if let image = UIImage(data: data) {
-
-						// This is UI code you need to do this on the main thread.
 
 						dispatch_async(dispatch_get_main_queue()) {
 							if let strongSelf = self {

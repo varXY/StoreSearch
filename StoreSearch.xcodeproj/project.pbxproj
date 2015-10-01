@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		310768821B966BBA0050011B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310768811B966BBA0050011B /* MenuViewController.swift */; };
 		311B98551B80621E001B6156 /* LandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311B98541B80621E001B6156 /* LandscapeViewController.swift */; };
 		311B98571B8076B8001B6156 /* FadeOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311B98561B8076B8001B6156 /* FadeOutAnimationController.swift */; };
 		3125DA6E1B91A0AD005893E8 /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3125DA701B91A0AD005893E8 /* NothingFoundCell.xib */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		310768811B966BBA0050011B /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		311B98541B80621E001B6156 /* LandscapeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LandscapeViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		311B98561B8076B8001B6156 /* FadeOutAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FadeOutAnimationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3125DA6F1B91A0AD005893E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NothingFoundCell.xib; sourceTree = "<group>"; };
@@ -106,10 +108,8 @@
 				313ED3AE1B76201B00689FFC /* SearchViewController.swift */,
 				318EF2981B7CCB0500C7A2E5 /* DetailViewController.swift */,
 				311B98541B80621E001B6156 /* LandscapeViewController.swift */,
-				318EF29A1B7CCFD800C7A2E5 /* DimmingPresentationController.swift */,
-				3152A5F01B7F824E00F2C2A8 /* BounceAnimationController.swift */,
-				3152A5F21B7F962700F2C2A8 /* SildeOutAnimationController.swift */,
-				311B98561B8076B8001B6156 /* FadeOutAnimationController.swift */,
+				310768811B966BBA0050011B /* MenuViewController.swift */,
+				31AB1B081BBCC3F9008C58C7 /* presntation&Animation */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -185,6 +185,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		31AB1B081BBCC3F9008C58C7 /* presntation&Animation */ = {
+			isa = PBXGroup;
+			children = (
+				318EF29A1B7CCFD800C7A2E5 /* DimmingPresentationController.swift */,
+				3152A5F01B7F824E00F2C2A8 /* BounceAnimationController.swift */,
+				3152A5F21B7F962700F2C2A8 /* SildeOutAnimationController.swift */,
+				311B98561B8076B8001B6156 /* FadeOutAnimationController.swift */,
+			);
+			name = "presntation&Animation";
+			sourceTree = "<group>";
+		};
 		31F8F9391B7A268100755607 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,7 +251,9 @@
 		313ED39F1B76201B00689FFC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = xiaoyao;
 				TargetAttributes = {
 					313ED3A61B76201B00689FFC = {
@@ -313,6 +326,7 @@
 				311B98551B80621E001B6156 /* LandscapeViewController.swift in Sources */,
 				3152A5F11B7F824E00F2C2A8 /* BounceAnimationController.swift in Sources */,
 				318EF2991B7CCB0500C7A2E5 /* DetailViewController.swift in Sources */,
+				310768821B966BBA0050011B /* MenuViewController.swift in Sources */,
 				3152A5EF1B7F78E000F2C2A8 /* GrandientView.swift in Sources */,
 				313ED3AD1B76201B00689FFC /* AppDelegate.swift in Sources */,
 				318EF2971B7CBFC900C7A2E5 /* UIImageView+DownloadImage.swift in Sources */,
@@ -423,6 +437,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -438,7 +453,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -476,7 +491,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -491,6 +506,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = StoreSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "myname.com.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -505,6 +521,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = StoreSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "myname.com.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -515,16 +532,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = StoreSearchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "myname.com.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StoreSearch.app/StoreSearch";
 			};
@@ -534,12 +549,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = StoreSearchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "myname.com.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StoreSearch.app/StoreSearch";
 			};

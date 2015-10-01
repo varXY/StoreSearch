@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class DetailViewController: UIViewController {
 
@@ -35,7 +36,7 @@ class DetailViewController: UIViewController {
 
 	var dismissAnimationStyle = AnimationStyle.Fade
 
-	required init(coder aDecoder: NSCoder) {
+	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		modalPresentationStyle = .Custom
 		transitioningDelegate = self
@@ -114,15 +115,22 @@ class DetailViewController: UIViewController {
 		}
 	}
 
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if segue.identifier == "ShowMenu" {
+			let navigationController = segue.destinationViewController as! UINavigationController
+			let controller = navigationController.topViewController as! MenuViewController
+			controller.delegate = self
+		}
+	}
+
 	deinit {
-		println("deinit \(self)")
 		downloadTask?.cancel()
 	}
 }
 
 extension DetailViewController: UIViewControllerTransitioningDelegate {
 
-	func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController!, sourceViewController source: UIViewController) -> UIPresentationController? {
+	func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
 		return DimmingPresentationController(presentedViewController: presented, presentingViewController: presenting)
 	}
 
@@ -144,5 +152,27 @@ extension DetailViewController: UIGestureRecognizerDelegate {
 
 	func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
 		return (touch.view === self.view)
+	}
+}
+
+extension DetailViewController: MenuViewControllerDelegate {
+	func menuViewControllerSendSupportEmail(_: MenuViewController) {
+
+		dismissViewControllerAnimated(true, completion: { () -> Void in
+			if MFMailComposeViewController.canSendMail() {
+				let controller = MFMailComposeViewController()
+				controller.mailComposeDelegate = self
+				controller.setSubject(NSLocalizedString("Support Request", comment: "Email subject"))
+				controller.setToRecipients(["1046509735@qq.com"])
+				controller.modalPresentationStyle = .FormSheet
+				self.presentViewController(controller, animated: true , completion: nil)
+			}
+		})
+	}
+}
+
+extension DetailViewController: MFMailComposeViewControllerDelegate {
+	func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+		dismissViewControllerAnimated(true, completion: nil)
 	}
 }

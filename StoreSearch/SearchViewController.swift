@@ -58,11 +58,22 @@ class SearchViewController: UIViewController {
 	override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
 		super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
 
-		switch newCollection.verticalSizeClass {
-		case .Compact:
-			showLandscapeViewWithCoordinator(coordinator)
-		case .Regular, .Unspecified:
-			hideLandscapeViewWithCoordinator(coordinator)
+		let rect = UIScreen.mainScreen().bounds
+		if (rect.width == 736 && rect.height == 414) || (rect.width == 414 && rect.height == 736) {
+
+			if presentedViewController != nil {
+				dismissViewControllerAnimated(true, completion: nil)
+			}
+
+		}else if UIDevice.currentDevice().userInterfaceIdiom != .Pad {
+
+			switch newCollection.verticalSizeClass {
+			case .Compact:
+				showLandscapeViewWithCoordinator(coordinator)
+			case .Regular, .Unspecified:
+				hideLandscapeViewWithCoordinator(coordinator)
+				
+			}
 
 		}
 	}
@@ -112,7 +123,6 @@ class SearchViewController: UIViewController {
 				controller.view.removeFromSuperview()
 				controller.removeFromParentViewController()
 				self.tempCurrentPage = controller.currentPage
-				println("SearchVC's page: \(self.tempCurrentPage)")
 				self.landscapeViewController = nil
 			})
 
@@ -144,7 +154,6 @@ class SearchViewController: UIViewController {
 			self.tableView.reloadData()
 			self.reloadInputViews()
 			self.tableView.reloadInputViews()
-			println("working!")
 		}
 	}
 
@@ -185,7 +194,7 @@ extension SearchViewController: UISearchBarDelegate {
 
 		if let category = Search.Category(rawValue: segmentedControl.selectedSegmentIndex) {
 
-			search.performSearchForText(searchBar.text, category: category, completion: { success in
+			search.performSearchForText(searchBar.text!, category: category, completion: { success in
 
 				if !success {
 					self.showNetworkError()
@@ -234,14 +243,14 @@ extension SearchViewController: UITableViewDataSource {
 			fatalError("Should never get here")
 
 		case .Loading:
-			let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.loadingCell, forIndexPath: indexPath) as! UITableViewCell
+			let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.loadingCell, forIndexPath: indexPath) 
 			let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
 			spinner.startAnimating()
 
 			return cell
 
 		case .NoResults:
-			return tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.nothingFoundCell, forIndexPath: indexPath) as! UITableViewCell
+			return tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.nothingFoundCell, forIndexPath: indexPath) 
 
 		case .Results(let list):
 			let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentofiers.searchResultCell, forIndexPath: indexPath) as! SearchResultCell
@@ -281,7 +290,7 @@ extension SearchViewController: UITableViewDelegate {
 		switch search.state {
 		case .NotSearchedYet, .Loading, .NoResults:
 			return nil
-		case .Results(let list):
+		case .Results(_):
 			return indexPath
 		}
 	}

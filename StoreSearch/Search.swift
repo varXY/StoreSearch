@@ -42,12 +42,12 @@ class Search {
 					if error.code == -999 { return }
 				} else if let httpResponse = response as? NSHTTPURLResponse {
 					if httpResponse.statusCode == 200 {
-						if let dictionary = self.parseJOSN(data) {
+						if let dictionary = self.parseJOSN(data!) {
 							var searchResults = self.parseDictionary(dictionary)
 							if searchResults.isEmpty {
 								self.state = .NoResults
 							} else {
-								searchResults.sort(<)
+								searchResults.sortInPlace(<)
 								self.state = .Results(searchResults)
 							}
 							success = true
@@ -76,23 +76,36 @@ class Search {
 
 		// This calls the stringByAddingPercentEscapesUsingEncoding() method to escape the special characters, which returns a new string that you then use for the search term. In theory this method can return nil for certain encodings but because you chose the UTF-8 encoding here that won’t ever happen, so you can safely force-unwrap the return value with the exclamation point at the end. (You could also have used if let.)
 
-		let escapedSearchText = searchText.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-		let urlString = String(format: "http://itunes.apple.com/search?term=%@&limit=50&entity=%@&lang=%@&counttry=%@", escapedSearchText, entityName, language, countryCode)
+		// let escapedSearchText = searchText.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+
+		let escapedSearchText = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+		let urlString = String(format: "http://itunes.apple.com/search?term=%@&limit=50&entity=%@&lang=%@&counttry=%@", escapedSearchText!, entityName, language, countryCode)
 		let url = NSURL(string: urlString)
-		println("URL: \(url!)")
 		return url!
 	}
 
 	private func parseJOSN(data: NSData) -> [String: AnyObject]?  {
-		var error: NSError?
+		// var error: NSError?
 
-		if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error) as? [String: AnyObject] {
+		do {
+			let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject]
+			return json
+		} catch let error as NSError {
+			print("JSON Error: \(error)")
+		} catch {
+			print("Unknown JSON Error")
+		}
+
+
+/*
+		if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject] {
 			return json
 		} else if let error = error {
-			println("JSON Error: \(error)")
+			print("JSON Error: \(error)")
 		} else {
-			println("Unknown JSON Error")
+			print("Unknown JSON Error")
 		}
+*/
 		return nil
 	}
 
@@ -129,12 +142,12 @@ class Search {
 					}
 
 				} else {
-					println("Expected a dictionary")
+					print("Expected a dictionary")
 				}
 			}
 
 		} else {
-			println("Expected 'results' array")
+			print("Expected 'results' array")
 		}
 		return searchResults
 	}
@@ -213,7 +226,7 @@ class Search {
 			searchResult.price = Double(price)
 		}
 		if let genres: AnyObject = dictionary["genres"] {
-			searchResult.genre = ", ".join(genres as! [String])
+			searchResult.genre = (genres as! [String]).joinWithSeparator(", ")
 		}
 		return searchResult
 	}

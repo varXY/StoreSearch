@@ -10,7 +10,7 @@ import UIKit
 
 class BounceAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
-	func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+	func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
 		return 0.4
 	}
 
@@ -23,7 +23,7 @@ class BounceAnimationController: NSObject, UIViewControllerAnimatedTransitioning
 
 				toView.frame = transitionContext.finalFrameForViewController(toViewController)
 
-				transitionContext.containerView().addSubview(toView)
+				transitionContext.containerView()!.addSubview(toView)
 
 				// The property you’re animating is the transform. 
 
